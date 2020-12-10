@@ -7,8 +7,12 @@ import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
 import AppsIcon  from '@material-ui/icons/Apps'
 import MoreVertIcon  from '@material-ui/icons/MoreVert'
 import VideoCallIcon  from '@material-ui/icons/VideoCall'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import HomeIcon from '@material-ui/icons/Home'
+import Subscriptions from '@material-ui/icons/Subscriptions'
+import Whatshot from '@material-ui/icons/Whatshot'
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
+import HistoryIcon from '@material-ui/icons/History'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   drawerContainer: {
     overflow: 'auto',
   },
+  listItem: {
+    paddingBottom: 4,
+    paddingTop: 4,
+  },
   listItemText: {
     fontSize: 14,
   },
@@ -50,7 +58,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Home() {
-  const classes = useStyles();
+  const classes = useStyles()
+  const icons1 = [<HomeIcon/>, <Whatshot/>, <Subscriptions/>]
+  const icons2 = [<VideoLibraryIcon/>, <HistoryIcon/>]
   
   return (
     <div className={classes.root}>
@@ -83,9 +93,9 @@ function Home() {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            {['Início', 'Em alta', 'Inscrições'].map((text, index) => (
+              <ListItem button classes={{root:classes.listItem}} key={text} >
+                <ListItemIcon>{icons1[index]}</ListItemIcon>
                 <ListItemText primary={text} classes={{
                   primary: classes.listItemText
                 }} />
@@ -94,10 +104,12 @@ function Home() {
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+            {['Biblioteca', 'Histórico'].map((text, index) => (
+              <ListItem button key={text} classes={{root:classes.listItem}}>
+                <ListItemIcon>{icons2[index]}</ListItemIcon>
+                <ListItemText primary={text} classes={{
+                  primary: classes.listItemText
+                }}/>
               </ListItem>
             ))}
           </List>
