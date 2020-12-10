@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, AppBar, IconButton, makeStyles, Toolbar, 
   Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, 
-  Box, Typography, ListSubheader, Grid} from '@material-ui/core'
+  Box, Typography, ListSubheader, Grid, Hidden, useTheme, Switch} from '@material-ui/core'
 import videos from './assets/videos'
 
 import MenuIcon from '@material-ui/icons/Menu'
@@ -18,7 +18,8 @@ import { AccountCircle, Whatshot, Subscriptions } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh'
+    height: '100vh',
+    backgroundColor: theme.palette.background.default
   },
   appBar: {
     boxShadow: 'none',
@@ -62,8 +63,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Home() {
-  const classes = useStyles()
+function Home({darkMode, setDarkMode}) {
+  const classes  = useStyles()
+  const theme = useTheme()
   const iconsList1 = [<HomeIcon/>, <Whatshot/>, <Subscriptions/>]
   const iconsList2 = [<VideoLibraryIcon/>, <HistoryIcon/>]
   
@@ -74,15 +76,21 @@ function Home() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <img src="images/preto.png" alt="logo" className={classes.logo}/>
+          <img src={theme.palette.type === "dark" ? "images/branco.png" 
+            : "images/preto.png"} alt="logo" className={classes.logo}/>
           <div className={classes.grow}/>
-          <IconButton className={classes.icons} color="inherit">
+          <Switch
+            value={darkMode}
+            onChange={() => setDarkMode(!darkMode)}
+            className={classes.icons}
+          />
+          <IconButton className={classes.icons}>
             <VideoCallIcon />
           </IconButton>
-          <IconButton className={classes.icons} color="inherit">
+          <IconButton className={classes.icons}>
             <AppsIcon />
           </IconButton>
-          <IconButton className={classes.icons} color="inherit">
+          <IconButton className={classes.icons}>
             <MoreVertIcon />
           </IconButton>
           <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit">
@@ -91,67 +99,69 @@ function Home() {
         </Toolbar>
       </AppBar>
       <Box display='flex'>
-        <Drawer
-          className={classes.drawer} variant="permanent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}>
-          <Toolbar />
-          <div className={classes.drawerContainer}>
-            <List>
-              {['Início', 'Em alta', 'Inscrições'].map((text, index) => (
-                <ListItem button classes={{root:classes.listItem}} key={text} >
-                  <ListItemIcon>{iconsList1[index]}</ListItemIcon>
-                  <ListItemText primary={text} classes={{
-                    primary: classes.listItemText
-                  }} />
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-            <List>
-              {['Biblioteca', 'Histórico'].map((text, index) => (
-                <ListItem button key={text} classes={{root:classes.listItem}}>
-                  <ListItemIcon>{iconsList2[index]}</ListItemIcon>
-                  <ListItemText primary={text} classes={{
-                    primary: classes.listItemText
-                  }}/>
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-            <Box p={7}>
-              <Typography variant="body2">
-                Faça login para curtir vídeo, comentar e se inscrever
-              </Typography>
-              <Box >
-                <Button size="large" variant="outlined" color="secondary"
-                startIcon={<AccountCircle/>}>
-                  Fazer Login
-                </Button>
+        <Hidden mdDown>  
+          <Drawer
+            className={classes.drawer} variant="permanent"
+            classes={{
+              paper: classes.drawerPaper,
+            }}>
+            <Toolbar />
+            <div className={classes.drawerContainer}>
+              <List>
+                {['Início', 'Em alta', 'Inscrições'].map((text, index) => (
+                  <ListItem button classes={{root:classes.listItem}} key={text} >
+                    <ListItemIcon>{iconsList1[index]}</ListItemIcon>
+                    <ListItemText primary={text} classes={{
+                      primary: classes.listItemText
+                    }} />
+                  </ListItem>
+                ))}
+              </List>
+              <Divider />
+              <List>
+                {['Biblioteca', 'Histórico'].map((text, index) => (
+                  <ListItem button key={text} classes={{root:classes.listItem}}>
+                    <ListItemIcon>{iconsList2[index]}</ListItemIcon>
+                    <ListItemText primary={text} classes={{
+                      primary: classes.listItemText
+                    }}/>
+                  </ListItem>
+                ))}
+              </List>
+              <Divider />
+              <Box p={7}>
+                <Typography variant="body2">
+                  Faça login para curtir vídeo, comentar e se inscrever
+                </Typography>
+                <Box >
+                  <Button size="large" variant="outlined" color="secondary"
+                  startIcon={<AccountCircle/>}>
+                    Fazer Login
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-            <Divider />
-            <List>
-              <ListSubheader>O MELHOR DO YOUTUBE</ListSubheader>
-              {['Música', 'Esportes', 'Jogos', 'Etc (cansei de por mais coisas'].map((text, index) => (
-                <ListItem button classes={{root:classes.listItem}} key={text} >
-                  <ListItemIcon><AddCircleIcon/></ListItemIcon>
-                  <ListItemText primary={text} classes={{
-                    primary: classes.listItemText
-                  }} />
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </Drawer>
+              <Divider />
+              <List>
+                <ListSubheader>O MELHOR DO YOUTUBE</ListSubheader>
+                {['Música', 'Esportes', 'Jogos', 'Etc (cansei de por mais coisas'].map((text, index) => (
+                  <ListItem button classes={{root:classes.listItem}} key={text} >
+                    <ListItemIcon><AddCircleIcon/></ListItemIcon>
+                    <ListItemText primary={text} classes={{
+                      primary: classes.listItemText
+                    }} />
+                  </ListItem>
+                ))}
+              </List>
+            </div>
+          </Drawer>
+        </Hidden>
         <Box p={8}>
           <Toolbar/>
           <Typography variant="h5" color="textPrimary"
           style={{fontWeight: 600}}>
             Recomendados
           </Typography>
-          <Grid container>
+          <Grid container spacing={4}>
             {videos.map((video, index)=>{
               return(
                 <Grid item lg={3} md={4} sm={6} xs={12}>
