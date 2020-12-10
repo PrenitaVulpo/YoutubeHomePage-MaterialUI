@@ -10,7 +10,8 @@ function App() {
       primary: {
         main: '#f44336'
       }
-    }
+    },
+    spacing: 4
   })
    
   return (
