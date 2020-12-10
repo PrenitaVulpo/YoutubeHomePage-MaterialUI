@@ -1,10 +1,11 @@
 import React from 'react';
 import {Button, AppBar, IconButton, makeStyles, Toolbar, 
   Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, 
-  Box, Typography, ListSubheader} from '@material-ui/core'
+  Box, Typography, ListSubheader, Grid} from '@material-ui/core'
+import videos from './assets/videos'
+
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
-
 import AppsIcon  from '@material-ui/icons/Apps'
 import MoreVertIcon  from '@material-ui/icons/MoreVert'
 import VideoCallIcon  from '@material-ui/icons/VideoCall'
@@ -150,6 +151,41 @@ function Home() {
           style={{fontWeight: 600}}>
             Recomendados
           </Typography>
+          <Grid container>
+            {videos.map((video, index)=>{
+              return(
+                <Grid item lg={3} md={4} sm={6} xs={12}>
+                <Box>
+                  <img
+                    style={{ width: '100%' }}
+                    alt={video.title}
+                    src={video.thumb}
+                  />
+                  <Box>
+                    <Typography
+                      style={{ fontWeight: 600 }}
+                      gutterBottom
+                      variant='body1'
+                      color='textPrimary'
+                    >
+                      {video.title}
+                    </Typography>
+                    <Typography
+                      display='block'
+                      variant='body2'
+                      color='textSecondary'
+                    >
+                      {video.channel}
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      {`${video.views} • ${video.date}`}
+                    </Typography>
+                  </Box>
+                </Box>
+                </Grid>
+              )
+            })}
+          </Grid>
         </Box>
       </Box>
     </div>
