@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, AppBar, IconButton, makeStyles, Toolbar, 
-  Drawer, List, ListItem, ListItemIcon, ListItemText, Divider} from '@material-ui/core'
+  Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, 
+  Box, Typography, ListSubheader} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
 
@@ -8,10 +9,10 @@ import AppsIcon  from '@material-ui/icons/Apps'
 import MoreVertIcon  from '@material-ui/icons/MoreVert'
 import VideoCallIcon  from '@material-ui/icons/VideoCall'
 import HomeIcon from '@material-ui/icons/Home'
-import Subscriptions from '@material-ui/icons/Subscriptions'
-import Whatshot from '@material-ui/icons/Whatshot'
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
 import HistoryIcon from '@material-ui/icons/History'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import { AccountCircle, Whatshot, Subscriptions } from '@material-ui/icons'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,13 +55,16 @@ const useStyles = makeStyles((theme) => ({
   },
   grow: {
     flexGrow: 1
+  },
+  typography: {
+    fontSize: 14
   }
 }))
 
 function Home() {
   const classes = useStyles()
-  const icons1 = [<HomeIcon/>, <Whatshot/>, <Subscriptions/>]
-  const icons2 = [<VideoLibraryIcon/>, <HistoryIcon/>]
+  const iconsList1 = [<HomeIcon/>, <Whatshot/>, <Subscriptions/>]
+  const iconsList2 = [<VideoLibraryIcon/>, <HistoryIcon/>]
   
   return (
     <div className={classes.root}>
@@ -85,36 +89,69 @@ function Home() {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer} variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}>
-        <Toolbar />
-        <div className={classes.drawerContainer}>
-          <List>
-            {['Início', 'Em alta', 'Inscrições'].map((text, index) => (
-              <ListItem button classes={{root:classes.listItem}} key={text} >
-                <ListItemIcon>{icons1[index]}</ListItemIcon>
-                <ListItemText primary={text} classes={{
-                  primary: classes.listItemText
-                }} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['Biblioteca', 'Histórico'].map((text, index) => (
-              <ListItem button key={text} classes={{root:classes.listItem}}>
-                <ListItemIcon>{icons2[index]}</ListItemIcon>
-                <ListItemText primary={text} classes={{
-                  primary: classes.listItemText
-                }}/>
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      </Drawer>
+      <Box display='flex'>
+        <Drawer
+          className={classes.drawer} variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}>
+          <Toolbar />
+          <div className={classes.drawerContainer}>
+            <List>
+              {['Início', 'Em alta', 'Inscrições'].map((text, index) => (
+                <ListItem button classes={{root:classes.listItem}} key={text} >
+                  <ListItemIcon>{iconsList1[index]}</ListItemIcon>
+                  <ListItemText primary={text} classes={{
+                    primary: classes.listItemText
+                  }} />
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <List>
+              {['Biblioteca', 'Histórico'].map((text, index) => (
+                <ListItem button key={text} classes={{root:classes.listItem}}>
+                  <ListItemIcon>{iconsList2[index]}</ListItemIcon>
+                  <ListItemText primary={text} classes={{
+                    primary: classes.listItemText
+                  }}/>
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <Box p={7}>
+              <Typography variant="body2">
+                Faça login para curtir vídeo, comentar e se inscrever
+              </Typography>
+              <Box >
+                <Button size="large" variant="outlined" color="secondary"
+                startIcon={<AccountCircle/>}>
+                  Fazer Login
+                </Button>
+              </Box>
+            </Box>
+            <Divider />
+            <List>
+              <ListSubheader>O MELHOR DO YOUTUBE</ListSubheader>
+              {['Música', 'Esportes', 'Jogos', 'Etc (cansei de por mais coisas'].map((text, index) => (
+                <ListItem button classes={{root:classes.listItem}} key={text} >
+                  <ListItemIcon><AddCircleIcon/></ListItemIcon>
+                  <ListItemText primary={text} classes={{
+                    primary: classes.listItemText
+                  }} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Drawer>
+        <Box p={8}>
+          <Toolbar/>
+          <Typography variant="h5" color="textPrimary"
+          style={{fontWeight: 600}}>
+            Recomendados
+          </Typography>
+        </Box>
+      </Box>
     </div>
   );
 }
