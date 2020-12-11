@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, AppBar, IconButton, makeStyles, Toolbar, 
   Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, 
-  Box, Typography, ListSubheader, Grid, Hidden, useTheme, Switch} from '@material-ui/core'
+  Box, Typography, ListSubheader, Hidden, useTheme, Switch} from '@material-ui/core'
 import videos from './assets/videos'
-import Video from './components/Video'
+import VideosBox from './components/VideosBox/VideosBox'
 
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
@@ -62,11 +62,7 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     fontSize: 14
   },
-  box: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around'
-  }
+  
 }))
 
 function Home({darkMode, setDarkMode}) {
@@ -161,18 +157,7 @@ function Home({darkMode, setDarkMode}) {
             </div>
           </Drawer>
         </Hidden>
-        <Box p={8} className={classes.box}>
-          <Toolbar/>
-          <Typography variant="h5" color="textPrimary"
-          style={{fontWeight: 600}}>
-            Recomendados
-          </Typography>
-          <Grid container spacing={4}>
-            {videos.map((video, index)=>{
-              return<Video video={video} />
-            })}
-          </Grid>
-        </Box>
+        <VideosBox videos={videos}/>
       </Box>
     </div>
   );
