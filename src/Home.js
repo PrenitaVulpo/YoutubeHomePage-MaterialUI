@@ -3,6 +3,7 @@ import {Button, AppBar, IconButton, makeStyles, Toolbar,
   Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, 
   Box, Typography, ListSubheader, Grid, Hidden, useTheme, Switch} from '@material-ui/core'
 import videos from './assets/videos'
+import Video from './components/Video'
 
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
@@ -60,6 +61,11 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     fontSize: 14
+  },
+  box: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
   }
 }))
 
@@ -155,7 +161,7 @@ function Home({darkMode, setDarkMode}) {
             </div>
           </Drawer>
         </Hidden>
-        <Box p={8}>
+        <Box p={8} className={classes.box}>
           <Toolbar/>
           <Typography variant="h5" color="textPrimary"
           style={{fontWeight: 600}}>
@@ -163,37 +169,7 @@ function Home({darkMode, setDarkMode}) {
           </Typography>
           <Grid container spacing={4}>
             {videos.map((video, index)=>{
-              return(
-                <Grid item lg={3} md={4} sm={6} xs={12}>
-                <Box>
-                  <img
-                    style={{ width: '100%' }}
-                    alt={video.title}
-                    src={video.thumb}
-                  />
-                  <Box>
-                    <Typography
-                      style={{ fontWeight: 600 }}
-                      gutterBottom
-                      variant='body1'
-                      color='textPrimary'
-                    >
-                      {video.title}
-                    </Typography>
-                    <Typography
-                      display='block'
-                      variant='body2'
-                      color='textSecondary'
-                    >
-                      {video.channel}
-                    </Typography>
-                    <Typography variant='body2' color='textSecondary'>
-                      {`${video.views} • ${video.date}`}
-                    </Typography>
-                  </Box>
-                </Box>
-                </Grid>
-              )
+              return<Video video={video} />
             })}
           </Grid>
         </Box>
