@@ -1,6 +1,8 @@
 import { AppBar, Button, IconButton, makeStyles, Switch, Toolbar, Dialog, 
   DialogTitle, Avatar, ListItemAvatar, ListItemText, ListItem, List, TextField, DialogContent } from '@material-ui/core'
 import React from 'react'
+import {connect} from 'react-redux'
+import * as login from '../../store/actions/login'
 
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
@@ -11,6 +13,9 @@ import AddIcon  from '@material-ui/icons/Add'
 import PersonIcon  from '@material-ui/icons/Person'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.default
+  },
   appBar: {
     boxShadow: 'none',
     zIndex: theme.zIndex.drawer + 1,
@@ -57,6 +62,7 @@ function SimpleDialog(props) {
 
   const handleLogin = () => {
     console.log("teste")
+    props.dispacho(login.toggleLogin(true))
   };
 
   return (
@@ -68,7 +74,7 @@ function SimpleDialog(props) {
         <DialogContent className={classes.dialogContent}>
           <TextField label="usuário" variant="outlined" className={classes.textBox}/>
           <TextField label="senha" variant="outlined" type="password"className={classes.textBox}/>
-          <Button onClick={()=>handleLogin} variant="contained">
+          <Button onClick={handleLogin} variant="contained">
             Logar
           </Button>
         </DialogContent>
@@ -77,7 +83,7 @@ function SimpleDialog(props) {
   );
 }
 
-const AppToolbar = ({darkMode, setDarkMode, theme}) =>{
+const AppToolbar = ({darkMode, setDarkMode, theme, dispatch}) =>{
   const classes  = useStyles()
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
@@ -92,36 +98,39 @@ const AppToolbar = ({darkMode, setDarkMode, theme}) =>{
   };
 
   return(
-    <AppBar color='inherit' className={classes.appBar}>
-      <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
-        <img src={theme.palette.type === "dark" ? "images/branco.png" 
-          : "images/preto.png"} alt="logo" className={classes.logo}/>
-        <div className={classes.grow}/>
-        <Switch
-          value={darkMode}
-          onChange={() => setDarkMode(!darkMode)}
-          className={classes.icons}
-        />
-        <IconButton className={classes.icons}>
-          <VideoCallIcon />
-        </IconButton>
-        <IconButton className={classes.icons}>
-          <AppsIcon />
-        </IconButton>
-        <IconButton className={classes.icons}>
-          <MoreVertIcon />
-        </IconButton>
-        <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
-          onClick={handleClickOpen}>
-          Fazer Login
-        </Button>
-      </Toolbar>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-    </AppBar>
+    <div className={classes.root}>
+      <AppBar color="inrerit" className={classes.appBar}>
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <img src={theme.palette.type === "dark" ? "images/branco.png" 
+            : "images/preto.png"} alt="logo" className={classes.logo}/>
+          <div className={classes.grow}/>
+          <Switch
+            value={darkMode}
+            onChange={() => setDarkMode(!darkMode)}
+            className={classes.icons}
+          />
+          <IconButton className={classes.icons}>
+            <VideoCallIcon />
+          </IconButton>
+          <IconButton className={classes.icons}>
+            <AppsIcon />
+          </IconButton>
+          <IconButton className={classes.icons}>
+            <MoreVertIcon />
+          </IconButton>
+          <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
+            onClick={handleClickOpen}>
+            Fazer Login
+          </Button>
+        </Toolbar>
+        <SimpleDialog selectedValue={selectedValue} open={open} 
+        onClose={handleClose} dispacho={dispatch}/>
+      </AppBar>
+    </div>
   )
 }
 
-export default AppToolbar
+export default connect(state => ({isLogged: state.isLogged}))(AppToolbar)
