@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button, AppBar, IconButton, makeStyles, Toolbar,
-  Box, Hidden, useTheme, Switch} from '@material-ui/core'
+import {makeStyles, Box, Hidden, useTheme} from '@material-ui/core'
 import VideosBox from './components/VideosBox/VideosBox'
 import DrawerComponent from './components/DrawerComponent/DrawerComponent'
 import AppToolbar from './components/AppToolbar/AppToolbar'

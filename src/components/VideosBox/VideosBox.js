@@ -23,7 +23,7 @@ const VideosBox = () => {
       </Typography>
       <Grid container spacing={4}>
         {videos.map(video =>{
-          return<Video video={video} />
+          return<Video key={video.id} video={video} />
         })}
       </Grid>
     </Box>
