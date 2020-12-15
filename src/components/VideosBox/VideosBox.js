@@ -1,6 +1,6 @@
 import Video from '../Video/Video'
 import { Box, Grid, makeStyles, Toolbar, Typography } from '@material-ui/core'
-import videos from '../../assets/videos'
+// import videos from '../../assets/videos'
 import {connect} from 'react-redux'
 
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const VideosBox = ({isLogged}) => {
+const VideosBox = ({isLogged, videos}) => {
   const classes = useStyles
   return (
     <Box p={8} className={classes.box}>
@@ -39,5 +39,6 @@ const VideosBox = ({isLogged}) => {
 }
 
 export default connect(state => ({
-  isLogged: state.isLogged
+  isLogged: state.isLogged,
+  videos: state.videos
 }))(VideosBox)
