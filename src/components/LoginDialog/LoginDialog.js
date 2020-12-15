@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const LoginDialog = ({open, handleClose, isLogged, dispatch}) => {
+const LoginDialog = ({open, handleClose, isLogged, dispatch, setOpen}) => {
   const classes = useStyles()
 
   function handleLogIn(){
     dispatch(LoginAction.toggleLogin(true))
+    setOpen(false)
   }
 
   return (

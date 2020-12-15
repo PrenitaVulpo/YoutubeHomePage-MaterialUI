@@ -37,7 +37,7 @@ function Home({darkMode, setDarkMode}) {
           <DrawerComponent handleOpen={handleOpen}/>
         </Hidden>
         <VideosBox />
-        <LoginDialog open={open} handleClose={handleClose} />
+        <LoginDialog open={open} handleClose={handleClose} setOpen={setOpen} />
       </Box>
     </div>
   );
