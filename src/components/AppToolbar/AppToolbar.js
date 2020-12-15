@@ -1,16 +1,14 @@
-import { AppBar, Button, IconButton, makeStyles, Switch, Toolbar, Dialog, 
-  DialogTitle, Avatar, ListItemAvatar, ListItemText, ListItem, List, TextField, DialogContent } from '@material-ui/core'
-import React from 'react'
-import {connect} from 'react-redux'
-import * as login from '../../store/actions/login'
+import { AppBar, Button, IconButton, makeStyles, Switch, Toolbar} from '@material-ui/core'
+import React, { useState } from 'react'
+import {connect} from 'react-redux' 
+import * as LoginAction from '../../store/actions/login'
 
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
 import AppsIcon  from '@material-ui/icons/Apps'
 import MoreVertIcon  from '@material-ui/icons/MoreVert'
 import VideoCallIcon  from '@material-ui/icons/VideoCall'
-import AddIcon  from '@material-ui/icons/Add'
-import PersonIcon  from '@material-ui/icons/Person'
+import LoginDialog from '../LoginDialog/LoginDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,17 +17,6 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     boxShadow: 'none',
     zIndex: theme.zIndex.drawer + 1,
-  },
-  dialog: {
-    display: "flex",    
-    justifyContent: "center",
-    flexDirection: "column",
-    alignItems: 'center'
-  },
-  dialogContent: {
-    display: 'flex',
-    justifyContent: "space-between",
-    flexDirection: "column"
   },
   textBox:{
     marginBottom: theme.spacing(4)
@@ -50,52 +37,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 
-function SimpleDialog(props) {
+const AppToolbar = ({darkMode, setDarkMode, theme, isLogged, dispatch, handleOpen}) =>{
   const classes  = useStyles()
-  const { onClose, selectedValue, open } = props;
 
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+  function handleLoggout(){
+    dispatch(LoginAction.toggleLogin(false))
+  }
 
-  const handleLogin = () => {
-    console.log("teste")
-    props.dispacho(login.toggleLogin(true))
-  };
-
-  return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <div style={{
-        padding: '5rem'
-      }} className={classes.dialog}>
-        <DialogTitle id="simple-dialog-title">Login</DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          <TextField label="usuário" variant="outlined" className={classes.textBox}/>
-          <TextField label="senha" variant="outlined" type="password"className={classes.textBox}/>
-          <Button onClick={handleLogin} variant="contained">
-            Logar
-          </Button>
-        </DialogContent>
-      </div>
-    </Dialog>
-  );
-}
-
-const AppToolbar = ({darkMode, setDarkMode, theme, dispatch}) =>{
-  const classes  = useStyles()
-  const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
-  };
 
   return(
     <div className={classes.root}>
@@ -121,16 +70,23 @@ const AppToolbar = ({darkMode, setDarkMode, theme, dispatch}) =>{
           <IconButton className={classes.icons}>
             <MoreVertIcon />
           </IconButton>
-          <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
-            onClick={handleClickOpen}>
-            Fazer Login
-          </Button>
+          {!isLogged ? 
+            <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
+            onClick={handleOpen}>
+              Fazer Login
+            </Button> 
+            : 
+            <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
+            onClick={handleLoggout}>
+              Loggout
+            </Button>
+          }
         </Toolbar>
-        <SimpleDialog selectedValue={selectedValue} open={open} 
-        onClose={handleClose} dispacho={dispatch}/>
       </AppBar>
     </div>
   )
 }
 
-export default connect(state => ({isLogged: state.isLogged}))(AppToolbar)
+export default connect(state => ({
+  isLogged: state.isLogged
+}))(AppToolbar)

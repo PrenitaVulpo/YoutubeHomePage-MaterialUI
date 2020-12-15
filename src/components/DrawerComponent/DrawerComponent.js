@@ -1,12 +1,14 @@
 import { makeStyles, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider,
   Typography, ListSubheader, Toolbar, Box, Button} from '@material-ui/core'
+import React from 'react'
+import * as LoginAction from '../../store/actions/login'
+import {connect} from 'react-redux' 
+
 import HomeIcon from '@material-ui/icons/Home'
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
 import HistoryIcon from '@material-ui/icons/History'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { AccountCircle, Whatshot, Subscriptions } from '@material-ui/icons'
-import React from 'react'
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const DrawerComponent = () =>{
+const DrawerComponent = ({isLogged, dispatch, handleOpen}) =>{
   const classes  = useStyles()
   const iconsList1 = [<HomeIcon/>, <Whatshot/>, <Subscriptions/>]
   const iconsList2 = [<VideoLibraryIcon/>, <HistoryIcon/>]
+
+  function handleLoggout(){
+    dispatch(LoginAction.toggleLogin(false))
+  }
 
   return(
     <Drawer
@@ -70,10 +76,17 @@ const DrawerComponent = () =>{
             Faça login para curtir vídeo, comentar e se inscrever
           </Typography>
           <Box >
-            <Button size="large" variant="outlined" color="secondary"
-            startIcon={<AccountCircle/>}>
-              Fazer Login
-            </Button>
+            {!isLogged ?
+              <Button size="large" variant="outlined" color="secondary"
+              startIcon={<AccountCircle/>} onClick={handleOpen}>
+                Fazer Login
+              </Button>
+              :
+              <Button size="large" variant="outlined" color="secondary"
+              startIcon={<AccountCircle/>} onClick={handleLoggout}>
+                Loggout
+              </Button>
+            }
           </Box>
         </Box>
         <Divider />
@@ -93,4 +106,6 @@ const DrawerComponent = () =>{
   )
 }
 
-export default DrawerComponent
+export default connect(state => ({
+  isLogged: state.isLogged
+}))(DrawerComponent)
