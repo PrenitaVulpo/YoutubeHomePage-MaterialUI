@@ -19,9 +19,14 @@ function Home({darkMode, setDarkMode}) {
   const classes  = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(true)
 
   function handleOpen(){
     setOpen(true)
+  }
+
+  function handleDrawer(){
+    setOpenDrawer(!openDrawer)
   }
 
   function handleClose(){
@@ -31,9 +36,9 @@ function Home({darkMode, setDarkMode}) {
   return (
     <div className={classes.root}>
       <AppToolbar darkMode={darkMode} setDarkMode={setDarkMode} theme={theme}
-      handleOpen={handleOpen}/>
+      handleOpen={handleOpen} handleDrawer={handleDrawer}/>
       <Box display='flex'>
-        <Hidden mdDown>  
+        <Hidden xlDown={!openDrawer}>  
           <DrawerComponent handleOpen={handleOpen}/>
         </Hidden>
         <VideosBox />

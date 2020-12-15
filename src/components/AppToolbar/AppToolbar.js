@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const AppToolbar = ({darkMode, setDarkMode, theme, isLogged, dispatch, handleOpen}) =>{
+const AppToolbar = ({darkMode, setDarkMode, theme, isLogged, 
+    dispatch, handleOpen, handleDrawer}) =>{
   const classes  = useStyles()
 
   function handleLoggout(){
@@ -50,8 +51,9 @@ const AppToolbar = ({darkMode, setDarkMode, theme, isLogged, dispatch, handleOpe
     <div className={classes.root}>
       <AppBar color="inrerit" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+           onClick={handleDrawer}>
+            <MenuIcon/>
           </IconButton>
           <img src={theme.palette.type === "dark" ? "images/branco.png" 
             : "images/preto.png"} alt="logo" className={classes.logo}/>
