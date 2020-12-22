@@ -1,6 +1,13 @@
-export function toggleLogin(isLogged){
+export function toggleLogin(username){
   return {
     type: "TOGGLE_LOGIN",
-    isLogged
+    username
+  }
+}
+
+export function toggleLogout(username){
+  return {
+    type: "TOGGLE_LOGIN",
+    username
   }
 }

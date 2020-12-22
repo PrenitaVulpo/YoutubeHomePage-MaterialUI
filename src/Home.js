@@ -7,7 +7,7 @@ import LoginDialog from './components/LoginDialog/LoginDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: 'auto',
     backgroundColor: theme.palette.background.default
   },
   typography: {

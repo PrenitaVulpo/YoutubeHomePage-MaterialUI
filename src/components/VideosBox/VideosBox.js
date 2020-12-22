@@ -13,12 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const VideosBox = ({isLogged, videos}) => {
+const VideosBox = ({username, videos}) => {
   const classes = useStyles
   return (
     <Box p={8} className={classes.box}>
       <Toolbar/>
-      {isLogged ? <div>
+      {username !== '' ? <div>
         <Typography variant="h5" color="textPrimary"
         style={{fontWeight: 600}}>
           Recomendados
@@ -39,6 +39,6 @@ const VideosBox = ({isLogged, videos}) => {
 }
 
 export default connect(state => ({
-  isLogged: state.isLogged,
+  username: state.username,
   videos: state.videos
 }))(VideosBox)

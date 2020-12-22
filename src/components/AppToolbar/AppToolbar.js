@@ -1,5 +1,5 @@
 import { AppBar, Button, IconButton, makeStyles, Switch, Toolbar} from '@material-ui/core'
-import React, { useState } from 'react'
+import React from 'react'
 import {connect} from 'react-redux' 
 import * as LoginAction from '../../store/actions/login'
 
@@ -8,7 +8,7 @@ import AccountCircleIcon  from '@material-ui/icons/AccountCircle'
 import AppsIcon  from '@material-ui/icons/Apps'
 import MoreVertIcon  from '@material-ui/icons/MoreVert'
 import VideoCallIcon  from '@material-ui/icons/VideoCall'
-import LoginDialog from '../LoginDialog/LoginDialog'
+// import LoginDialog from '../LoginDialog/LoginDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,15 +38,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const AppToolbar = ({darkMode, setDarkMode, theme, isLogged, 
+const AppToolbar = ({darkMode, setDarkMode, theme, username, 
     dispatch, handleOpen, handleDrawer}) =>{
   const classes  = useStyles()
 
   function handleLoggout(){
-    dispatch(LoginAction.toggleLogin(false))
+    dispatch(LoginAction.toggleLogout(''))
   }
 
-
+  console.log('User:', username)
   return(
     <div className={classes.root}>
       <AppBar color="inrerit" className={classes.appBar}>
@@ -72,7 +72,7 @@ const AppToolbar = ({darkMode, setDarkMode, theme, isLogged,
           <IconButton className={classes.icons}>
             <MoreVertIcon />
           </IconButton>
-          {!isLogged ? 
+          {username === '' ? 
             <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
             onClick={handleOpen}>
               Fazer Login
@@ -80,7 +80,7 @@ const AppToolbar = ({darkMode, setDarkMode, theme, isLogged,
             : 
             <Button startIcon={<AccountCircleIcon/>} variant="outlined" color="inherit"
             onClick={handleLoggout}>
-              Loggout
+              {username}
             </Button>
           }
         </Toolbar>
@@ -90,5 +90,5 @@ const AppToolbar = ({darkMode, setDarkMode, theme, isLogged,
 }
 
 export default connect(state => ({
-  isLogged: state.isLogged
+  username: state.username
 }))(AppToolbar)

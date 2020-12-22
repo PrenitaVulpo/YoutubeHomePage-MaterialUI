@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles } from '@material-ui/core'
-import React from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
 import {connect} from 'react-redux'
 import * as LoginAction from '../../store/actions/login'
 
@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const LoginDialog = ({open, handleClose, isLogged, dispatch, setOpen}) => {
+const LoginDialog = ({open, handleClose, username, dispatch, setOpen}) => {
   const classes = useStyles()
+  const [user, setUser] = useState('')
 
   function handleLogIn(){
-    dispatch(LoginAction.toggleLogin(true))
+    dispatch(LoginAction.toggleLogin(user))
     setOpen(false)
   }
 
@@ -31,10 +32,12 @@ const LoginDialog = ({open, handleClose, isLogged, dispatch, setOpen}) => {
       <div className={classes.dialog}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-
+          <TextField label="Usuário" variant="filled" 
+            onChange={ e => setUser(e.target.value)}
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleLogIn}>Teste</Button>
+          <Button onClick={handleLogIn}>Logar</Button>
         </DialogActions>
       </div>
     </Dialog>
@@ -42,5 +45,5 @@ const LoginDialog = ({open, handleClose, isLogged, dispatch, setOpen}) => {
 }
 
 export default connect(state => ({
-  isLogged: state.isLogged
+  username: state.username
 }))(LoginDialog)

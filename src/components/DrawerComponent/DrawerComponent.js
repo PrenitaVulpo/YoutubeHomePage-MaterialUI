@@ -32,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const DrawerComponent = ({isLogged, dispatch, handleOpen}) =>{
+const DrawerComponent = ({username, dispatch, handleOpen}) =>{
   const classes  = useStyles()
   const iconsList1 = [<HomeIcon/>, <Whatshot/>, <Subscriptions/>]
   const iconsList2 = [<VideoLibraryIcon/>, <HistoryIcon/>]
 
   function handleLoggout(){
-    dispatch(LoginAction.toggleLogin(false))
+    dispatch(LoginAction.toggleLogout(''))
   }
 
   return(
@@ -76,7 +76,7 @@ const DrawerComponent = ({isLogged, dispatch, handleOpen}) =>{
             Faça login para curtir vídeo, comentar e se inscrever
           </Typography>
           <Box >
-            {!isLogged ?
+            {username === '' ?
               <Button size="large" variant="outlined" color="secondary"
               startIcon={<AccountCircle/>} onClick={handleOpen}>
                 Fazer Login
@@ -84,7 +84,7 @@ const DrawerComponent = ({isLogged, dispatch, handleOpen}) =>{
               :
               <Button size="large" variant="outlined" color="secondary"
               startIcon={<AccountCircle/>} onClick={handleLoggout}>
-                Loggout
+                {username}
               </Button>
             }
           </Box>
@@ -107,5 +107,5 @@ const DrawerComponent = ({isLogged, dispatch, handleOpen}) =>{
 }
 
 export default connect(state => ({
-  isLogged: state.isLogged
+  username: state.username
 }))(DrawerComponent)
