@@ -7,7 +7,7 @@ import LoginDialog from './components/LoginDialog/LoginDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 'auto',
+    height: '100%',
     backgroundColor: theme.palette.background.default
   },
   typography: {
@@ -37,7 +37,7 @@ function Home({darkMode, setDarkMode}) {
     <div className={classes.root}>
       <AppToolbar darkMode={darkMode} setDarkMode={setDarkMode} theme={theme}
       handleOpen={handleOpen} handleDrawer={handleDrawer}/>
-      <Box display='flex'>
+      <Box display='flex' minHeight="100vh">
         <Hidden xlDown={!openDrawer}>  
           <DrawerComponent handleOpen={handleOpen}/>
         </Hidden>

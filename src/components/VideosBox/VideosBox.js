@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
   box: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    height: '100vh'
   },
 }))
 
